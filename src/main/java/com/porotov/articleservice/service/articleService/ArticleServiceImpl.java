@@ -6,6 +6,8 @@ import com.porotov.articleservice.exeption.ResourceNotFoundException;
 import com.porotov.articleservice.model.Article;
 import com.porotov.articleservice.repository.ArticleRepository;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ArticleServiceImpl implements ArticleService{
 
+    private static final Logger logger = LoggerFactory.getLogger(ArticleServiceImpl.class);
     private final ArticleRepository articleRepository;
 
     @Override
@@ -41,13 +44,15 @@ public class ArticleServiceImpl implements ArticleService{
         article.setUrl(articleDTO.getUrl());
         article.setDateChangeTime(LocalDateTime.now());
         return articleRepository.save(article);
-
     }
 
     @Override
     public Article updateArticle(Long id, ArticleDTO articleDTO) {
 
         Article existingArticle = articleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Article with id '" + id + "' not found"));
+        if (articleRepository.findByUrl(articleDTO.getUrl()).isPresent()) {
+            throw new ResourceAlreadyExistsException("Article with url '" + articleDTO.getUrl() + "' already exists");
+        }
         existingArticle.setTitle(articleDTO.getTitle());
         existingArticle.setUrl(articleDTO.getUrl());
         existingArticle.setDateChangeTime(LocalDateTime.now());
