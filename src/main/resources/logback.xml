@@ -5,7 +5,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.example" level="DEBUG" />
+    <logger name="com.porotov.articleservice" level="DEBUG" />
 
     <root level="INFO">
         <appender-ref ref="console" />

@@ -1,6 +1,8 @@
 package com.porotov.articleservice.config;
 
 import jakarta.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -21,6 +23,8 @@ public class DataConfig {
     private static final String PROP_DATABASE_URL = "spring.dataSource.url";
     private static final String PROP_DATABASE_USERNAME = "spring.dataSource.username";
 
+    private static final Logger logger = LoggerFactory.getLogger(DataConfig.class);
+
     @Resource
     private Environment env;
 
@@ -29,10 +33,14 @@ public class DataConfig {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
+        logger.info("Data Source object created;");
+
         dataSource.setDriverClassName(env.getRequiredProperty(PROP_DATABASE_DRIVER));
         dataSource.setUrl(env.getRequiredProperty(PROP_DATABASE_URL));
         dataSource.setUsername(env.getRequiredProperty(PROP_DATABASE_USERNAME));
         dataSource.setPassword(env.getRequiredProperty(PROP_DATABASE_PASSWORD));
+
+        logger.info("Data Source object configured;");
 
         return dataSource;
 
