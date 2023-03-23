@@ -1,0 +1,18 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/CMS
+      SPRING_DATASOURCE_USERNAME: Dale
+      SPRING_DATASOURCE_PASSWORD: xDv_3t_o_pr
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: CMS
+      POSTGRES_USER: Dale
+      POSTGRES_PASSWORD: xDv_3t_o_pr
