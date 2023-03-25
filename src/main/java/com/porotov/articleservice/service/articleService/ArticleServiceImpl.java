@@ -28,10 +28,13 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public List<Article> getAllArticles() {
+    
         log.debug("Getting all articles ");
         List<Article> articles = articleRepository.findAll();
         log.debug("Found {} articles",articles.size());
+        
         return articles;
+        
     }
 
     @Override
@@ -71,6 +74,7 @@ public class ArticleServiceImpl implements ArticleService{
         article.setUrl(articleDTO.getUrl());
         article.setDateChangeTime(LocalDateTime.now());
 
+
         articleRepository.save(article);
 
         log.debug("Article with ID: {} created", article.getId());
@@ -109,6 +113,8 @@ public class ArticleServiceImpl implements ArticleService{
         log.debug("Article with ID: {} updated", article.getId());
 
         return article;
+
+
 
     }
 
