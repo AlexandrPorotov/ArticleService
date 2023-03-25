@@ -1,18 +1,25 @@
 version: '3'
 services:
   app:
-    build: .
+    build:
+      context: Docker/service
+      dockerfile: Dockerfile.development
     ports:
       - 8080:8080
     depends_on:
       - db
+    image: oracle:latest
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/CMS
-      SPRING_DATASOURCE_USERNAME: Dale
-      SPRING_DATASOURCE_PASSWORD: xDv_3t_o_pr
+      SPRING_DATASOURCE_USERNAME: User
+      SPRING_DATASOURCE_PASSWORD: qwerty
   db:
-    image: postgres
+    image: postgres:latest
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_DB: CMS
-      POSTGRES_USER: Dale
-      POSTGRES_PASSWORD: xDv_3t_o_pr
+      POSTGRES_USER: User
+      POSTGRES_PASSWORD: qwerty
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
