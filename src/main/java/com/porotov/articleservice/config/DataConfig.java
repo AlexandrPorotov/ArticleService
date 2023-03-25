@@ -23,7 +23,7 @@ public class DataConfig {
     private static final String PROP_DATABASE_URL = "spring.dataSource.url";
     private static final String PROP_DATABASE_USERNAME = "spring.dataSource.username";
 
-    private static final Logger logger = LoggerFactory.getLogger(DataConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(DataConfig.class.getName());
 
     @Resource
     private Environment env;
@@ -31,16 +31,14 @@ public class DataConfig {
     @Bean
     public DataSource dataSource() {
 
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        log.debug("Loading Data Source");
 
-        logger.info("Data Source object created;");
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         dataSource.setDriverClassName(env.getRequiredProperty(PROP_DATABASE_DRIVER));
         dataSource.setUrl(env.getRequiredProperty(PROP_DATABASE_URL));
         dataSource.setUsername(env.getRequiredProperty(PROP_DATABASE_USERNAME));
         dataSource.setPassword(env.getRequiredProperty(PROP_DATABASE_PASSWORD));
-
-        logger.info("Data Source object configured;");
 
         return dataSource;
 

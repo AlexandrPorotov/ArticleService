@@ -8,11 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ArticleServiceApplication {
 
-    private static final Logger logger = LoggerFactory.getLogger(ArticleServiceApplication.class);
+    private final static Logger log = LoggerFactory.getLogger(ArticleServiceApplication.class.getName());
 
     public static void main(String[] args) {
+        log.info("Starting Article Service ...");
         SpringApplication.run(ArticleServiceApplication.class, args);
-        logger.info("Application started successfully");
     }
 
 }
